@@ -2,11 +2,16 @@ import { useState,useEffect } from 'react'
 import HomePage from './components/HomePage'
 import Header from './components/Header'
 import FileDisplay from './components/FileDisplay'
+import Information from './components/Information'
+import Transcribing from './components/Transcribing'
 
 function App() {
  
   const [file,setFile]=useState(null)
-  const [audionStream,setAudioStream]=useState(null)
+  const [audioStream,setAudioStream]=useState(null)
+  const [loading,setLoading]=useState(false)
+  const [output,setOutput]=useState(null)
+  const [finished, setFinished] = useState(false)
 
   function handleAudioReset(){
 
@@ -15,7 +20,13 @@ function App() {
   }
 
 
-  const isAudioAvailable = file || audionStream // IN this we are checking the both audio types
+
+  useEffect(() => {
+    console.log(audioStream);
+  }, [audioStream]);
+  
+
+  const isAudioAvailable = file || audioStream // IN this we are checking the both audio types
 
 
   return (
@@ -26,9 +37,17 @@ function App() {
         
         <Header />
 
-        {/* If don't have the audio render the HOmePage other wise render the FileDisplay */}
+        {output ? (
+          <Information output={output} finished={finished}/>
+        ) : loading ? (
+          <Transcribing />
+        ) : isAudioAvailable ? (
+          <FileDisplay handleFormSubmission={handleFormSubmission} handleAudioReset={handleAudioReset} file={file} audioStream={audioStream} />
+        ) : (
+          <HomePage setFile={setFile} setAudioStream={setAudioStream} />
+        )}
 
-        {isAudioAvailable ? (<FileDisplay file={file} audionStream={audionStream} handleAudioReset={handleAudioReset} />):(<HomePage setFile={setFile} setAudioStream={setAudioStream}  />)}
+        
 
       </section>
        
