@@ -1,9 +1,9 @@
-import React from 'react'
-import { useState } from 'react'
+import React,{ useState } from 'react'
+
 
 export default function FileDisplay(props) {
 
-     const{handleAudioReset,file,audioStrean} = props
+     const{handleAudioReset,file,audioStrean,handleFormSubmission} = props
   
 
 
@@ -18,7 +18,7 @@ export default function FileDisplay(props) {
 
         <div className='flex items-center justify-between gap-4'>
                 <button onClick={handleAudioReset} className='text-slate-400 hover:text-blue-600 duration-200'>Reset</button>
-                <button  className='specialBtn  px-3 p-2 rounded-lg text-blue-400 flex items-center gap-2 font-medium '>
+                <button onClick={handleFormSubmission} className='specialBtn  px-3 p-2 rounded-lg text-blue-400 flex items-center gap-2 font-medium '>
                     <p>Transcribe</p>
                     <i className="fa-solid fa-pen-nib"></i>
                     
