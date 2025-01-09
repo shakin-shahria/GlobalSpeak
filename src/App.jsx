@@ -1,4 +1,4 @@
-import { useState,useEffect,useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import HomePage from './components/HomePage'
 import Header from './components/Header'
 import FileDisplay from './components/FileDisplay'
@@ -7,30 +7,21 @@ import Transcribing from './components/Transcribing'
 import { MessageTypes } from './utils/presets'
 
 function App() {
- 
-  const [file,setFile]=useState(null)
-  const [audioStream,setAudioStream]=useState(null)
-  const [loading,setLoading]=useState(false)
-  const [output,setOutput]=useState(null)
+  const [file, setFile] = useState(null)
+  const [audioStream, setAudioStream] = useState(null)
+  const [output, setOutput] = useState(null)
   const [downloading, setDownloading] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [finished, setFinished] = useState(false)
 
-  function handleAudioReset(){
+  const isAudioAvailable = file || audioStream
 
+  function handleAudioReset() {
     setFile(null)
     setAudioStream(null)
   }
-  
-  useEffect(() => {
-    console.log(audioStream);
-  }, [audioStream]);
-  
-  const isAudioAvailable = file || audioStream // IN this we are checking the both audio types
 
-
-  
-
-  const worker =useRef(null)
+  const worker = useRef(null)
 
   useEffect(() => {
     if (!worker.current) {
@@ -86,20 +77,11 @@ function App() {
       model_name
     })
   }
-  
-
-  
-
-  
 
   return (
     <div className='flex flex-col max-w-[1000px] mx-auto w-full'>
-
-
-      <section className='min-h-screen flex flex-col' >
-        
+      <section className='min-h-screen flex flex-col'>
         <Header />
-
         {output ? (
           <Information output={output} finished={finished}/>
         ) : loading ? (
@@ -109,16 +91,8 @@ function App() {
         ) : (
           <HomePage setFile={setFile} setAudioStream={setAudioStream} />
         )}
-
-        
-
       </section>
-       
-      
-       <footer>
-
-       </footer>
-      
+      <footer></footer>
     </div>
   )
 }
